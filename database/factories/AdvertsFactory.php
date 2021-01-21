@@ -22,6 +22,7 @@ class AdvertsFactory extends Factory
     public function definition()
     {
         return [
+            'category_id' => rand(1, 21),
             'user_id' => rand(1, 5),
             'city_id' => rand(1, 3605),
             'title' => $this->faker->text(50),

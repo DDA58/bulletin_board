@@ -34,4 +34,4 @@ WORKDIR /var/www/bulletin_board
 
 USER $user
 
-CMD bash -c "composer install && php artisan migrate && php-fpm"
+CMD bash -c "composer install && php artisan migrate:refresh --seed && php-fpm"

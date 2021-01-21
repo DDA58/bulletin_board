@@ -10,7 +10,7 @@
 			<div id="content" class="col-9 skel-cell-important">
 				<section>
 					<header>
-						<h2>Praesent mattis</h2>
+						<h2>Объявления</h2>
 					</header>
 					<div class="container" style="width: 100%;">
 						<div class="row">

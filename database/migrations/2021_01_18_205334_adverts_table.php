@@ -15,6 +15,7 @@ class AdvertsTable extends Migration
     {
         Schema::create('adverts', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('category_id')->index();
             $table->bigInteger('user_id')->index();
             $table->bigInteger('city_id')->index();
             $table->string('title');

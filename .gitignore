@@ -15,3 +15,7 @@ npm-debug.log
 yarn-error.log
 
 one/
+
+storage/redis-data/
+
+storage/categor.sql

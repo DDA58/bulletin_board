@@ -49,10 +49,12 @@ services:
   redis:
     image: 'redis'
     container_name: bulletin_board_redis
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
         - '6379:6379'
     volumes:
-        - './storage/redis:/data'
+        - './storage/redis-data:/data'
     networks:
         - bulletin_board
   node:

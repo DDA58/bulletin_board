@@ -8,7 +8,7 @@ use App\Models\Adverts;
 class AdvertismentsController extends Controller
 {
     public function index() {
-    	$cAvderts = Adverts::get();
+		$cAvderts = Adverts::get();
 		return view('advertisments.index', ['cAvderts' => $cAvderts]);
     }
 }
