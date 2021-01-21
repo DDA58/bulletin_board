@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  app:
+    build:
+      args:
+        user: bulletin_board
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: bulletin_board
+    container_name: bulletin_board_app
+    restart: unless-stopped
+    working_dir: /var/www/bulletin_board
+    volumes:
+      - ./:/var/www/bulletin_board
+    networks:
+      - bulletin_board
+    depends_on:
+      - db
+      - nginx
+      - redis
+      - node
+  db:
+    image: postgres
+    container_name: bulletin_board_db
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - "./storage/pg-data:/var/lib/postgresql/data"
+      #- ./docker-compose/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - bulletin_board
+  nginx:
+    image: nginx:alpine
+    container_name: bulletin_board_nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/bulletin_board
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - bulletin_board
+  redis:
+    image: 'redis'
+    container_name: bulletin_board_redis
+    ports:
+        - '6379:6379'
+    volumes:
+        - './storage/redis:/data'
+    networks:
+        - bulletin_board
+  node:
+    image: "node:12"
+    container_name: bulletin_board_node
+    user: "node"
+    working_dir: /home/node/app/bulletin_board
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/home/node/app/bulletin_board
+    expose:
+      - "8081"
+    command: bash -c "npm install && npm run watch"
+networks:
+  bulletin_board:
+    driver: bridge
