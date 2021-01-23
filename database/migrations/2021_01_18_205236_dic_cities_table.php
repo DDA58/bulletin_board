@@ -20,6 +20,7 @@ class DicCitiesTable extends Migration
             $table->string('slug');
             $table->timestamps();
             //$table->softDeletes();
+            $table->foreign('region_id')->references('id')->on('dic_regions');
         });
     }
 

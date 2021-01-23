@@ -27,6 +27,9 @@ class AdvertsTable extends Migration
             $table->json('photos')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('category_id')->references('id')->on('ad_categories');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('city_id')->references('id')->on('dic_cities');
         });
     }
 

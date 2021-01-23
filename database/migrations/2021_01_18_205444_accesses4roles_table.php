@@ -20,6 +20,8 @@ class Accesses4rolesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->index(['access_id', 'role_id']);
+            $table->foreign('access_id')->references('id')->on('accesses');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

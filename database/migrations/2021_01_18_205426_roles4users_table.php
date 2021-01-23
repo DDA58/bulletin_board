@@ -20,6 +20,8 @@ class Roles4usersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->index(['user_id', 'role_id']);
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

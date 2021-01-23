@@ -23,8 +23,8 @@ class AdvertsFactory extends Factory
     {
         return [
             'category_id' => rand(1, 21),
-            'user_id' => rand(1, 5),
-            'city_id' => rand(1, 3605),
+            'user_id' => rand(1, 10),
+            'city_id' => rand(1023, 4627),
             'title' => $this->faker->text(50),
             'description' => $this->faker->text(500),
             'status' => 0,
