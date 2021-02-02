@@ -5,31 +5,45 @@
  */
 
 require('./bootstrap');
+import Inputmask from "inputmask";
 
-document.querySelector('#sidebar section .category-container').addEventListener('click', (event) => {
-	event = event || window.event
-	var clickedElem = event.target || event.srcElement
-	const hasClass = function (elem, className) {
-		return new RegExp("(^|\\s)"+className+"(\\s|$)").test(elem.className)
-	}
+(() => {
+	const categoryContainerNode = document.querySelector('#sidebar section .category-container');
+	if(!categoryContainerNode)
+		return;
+	categoryContainerNode.addEventListener('click', (event) => {
+		event = event || window.event
+		var clickedElem = event.target || event.srcElement
+		const hasClass = function (elem, className) {
+			return new RegExp("(^|\\s)"+className+"(\\s|$)").test(elem.className)
+		}
 
-	if (!hasClass(clickedElem, 'expand')) {
-		return // клик не там
-	}
+		if (!hasClass(clickedElem, 'expand')) {
+			return // клик не там
+		}
 
-	// Node, на который кликнули
-	var node = clickedElem.parentNode
-	if (hasClass(node, 'expand-leaf')) {
-		return // клик на листе
-	}
+		// Node, на который кликнули
+		var node = clickedElem.parentNode
+		if (hasClass(node, 'expand-leaf')) {
+			return // клик на листе
+		}
 
-	// определить новый класс для узла
-	var newClass = hasClass(node, 'expand-open') ? 'expand-closed' : 'expand-open'
-	// заменить текущий класс на newClass
-	// регексп находит отдельно стоящий open|close и меняет на newClass
-	var re =  /(^|\s)(expand-open|expand-closed)(\s|$)/
-	setTimeout(() => node.className = node.className.replace(re, '$1'+newClass+'$3'), 200)
-})
+		// определить новый класс для узла
+		var newClass = hasClass(node, 'expand-open') ? 'expand-closed' : 'expand-open'
+		// заменить текущий класс на newClass
+		// регексп находит отдельно стоящий open|close и меняет на newClass
+		var re =  /(^|\s)(expand-open|expand-closed)(\s|$)/
+		setTimeout(() => node.className = node.className.replace(re, '$1'+newClass+'$3'), 200)
+	})
+})();
+
+(() => {
+	const mobilePhoneNodes = document.querySelectorAll('.mobile-phone-masked');
+	if(!mobilePhoneNodes.length)
+		return;
+	mobilePhoneNodes.forEach(node => Inputmask({"mask": "+7(999)999-9999"}).mask(node))
+
+})();
 
 // window.Vue = require('vue').default;
 

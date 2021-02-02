@@ -15,6 +15,17 @@
 body {
 	background: #ffffff;
 }
+
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.page-link {
+    color: #212529;
+}
+
 /* контейнер просто содержит узлы.
  Узел сам будет отвечать за свой отступ */
 .category-container {

@@ -34,6 +34,9 @@
 										</div>
 									@endforeach
 								</div>
+								<div class="row col-12 justify-content-center">
+									{{ $cAvderts->links() }}
+								</div>
 							</div>
 						</div>
 					</div>

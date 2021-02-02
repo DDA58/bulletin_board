@@ -9,7 +9,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: bulletin_board
-    container_name: bulletin_board_app
+    container_name: ${APP_NAME}_app
     restart: unless-stopped
     working_dir: /var/www/bulletin_board
     volumes:
@@ -21,9 +21,10 @@ services:
       - nginx
       - redis
       - node
+      - rabbitmq
   db:
     image: postgres
-    container_name: bulletin_board_db
+    container_name: ${APP_NAME}_db
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
@@ -37,7 +38,7 @@ services:
       - bulletin_board
   nginx:
     image: nginx:alpine
-    container_name: bulletin_board_nginx
+    container_name: ${APP_NAME}_nginx
     restart: unless-stopped
     ports:
       - 80:80
@@ -48,7 +49,7 @@ services:
       - bulletin_board
   redis:
     image: 'redis'
-    container_name: bulletin_board_redis
+    container_name: ${APP_NAME}_redis
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
@@ -59,7 +60,7 @@ services:
         - bulletin_board
   node:
     image: "node:12"
-    container_name: bulletin_board_node
+    container_name: ${APP_NAME}_node
     user: "node"
     working_dir: /home/node/app/bulletin_board
     environment:
@@ -69,6 +70,33 @@ services:
     expose:
       - "8081"
     command: bash -c "npm install && npm run watch"
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ${APP_NAME}_rabbitmq
+    volumes:
+      #- ./docker-compose/rabbitmq/etc/:/etc/rabbitmq/
+      - ./storage/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./docker-compose/rabbitmq/logs/:/var/log/rabbitmq/
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - bulletin_board
+  queue:
+    image: bulletin_board
+    container_name: ${APP_NAME}_queue
+    restart: unless-stopped
+    working_dir: /var/www/bulletin_board
+    command: php artisan queue:work
+    volumes:
+      - ./:/var/www/bulletin_board
+    networks:
+      - bulletin_board
+    depends_on:
+      - app
 networks:
   bulletin_board:
     driver: bridge

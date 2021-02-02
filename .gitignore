@@ -17,5 +17,7 @@ yarn-error.log
 one/
 
 storage/redis-data/
+storage/pg-data/
+storage/rabbitmq/
 
 storage/categor.sql

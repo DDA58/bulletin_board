@@ -15,7 +15,10 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "predis/predis": "^1.1"
+        "php-amqplib/php-amqplib": "^2.12",
+        "predis/predis": "^1.1",
+        "queue-interop/amqp-interop": "^0.8.2",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

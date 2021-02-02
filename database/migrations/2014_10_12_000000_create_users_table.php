@@ -21,13 +21,19 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('mobile_phone', 16)->unique();
             $table->string('time2call')->default('');
-            $table->tinyInteger('status')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->index(['email', 'password']);
         });
+
+        \DB::unprepared("
+            DROP TYPE IF EXISTS user_status;
+            CREATE TYPE user_status AS ENUM ('blocked', 'active', 'wait');
+            ALTER TABLE users
+                ADD COLUMN status user_status DEFAULT 'wait';
+        ");
     }
 
     /**
