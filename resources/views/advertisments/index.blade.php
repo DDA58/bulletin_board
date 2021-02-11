@@ -16,23 +16,25 @@
 						<div class="row">
 							<div class="col-12">
 								<div class="row">
-									@foreach ($cAvderts as $oAdvert)
+									@forelse ($cAvderts as $oAdvert)
 										<div class="col-6">
 											<div class="row">
 												<div class="row">
-													<img class="col-6" src="images/pics04.jpg" width="78" height="78" alt="" style="width: 150px; height: 150px;">
+													<img class="col-6" src="{{asset('images/img_template.png')}}" width="78" height="78" alt="" style="width: 150px; height: 150px;">
 													<div class="row col-6" style="align-content: flex-start;">
-														<span class="posted col-12" style="padding-left: 0px; align-self: center;">Дата публикации: {{$oAdvert->publish_date}}</span>
-														<span class="posted col-12" style="padding-left: 0px; align-self: center;">Просмотров: {{$oAdvert->views_amount}}</span>
-														<span class="posted col-12" style="padding-left: 0px; align-self: center;">Стоимость: {{$oAdvert->cost}}</span>
-													</div>
+                                                        <span class="posted col-12" style="padding-left: 0px; align-self: center;">{{$oAdvert->city->name}}, {{$oAdvert->region->name}}</span>
+                                                        <span class="posted col-12" style="padding-left: 0px; align-self: center;">Стоимость: {{$oAdvert->cost}}</span>
+                                                        <span class="posted col-12" style="padding-left: 0px; align-self: center;">Дата публикации: {{$oAdvert->publish_date}}</span>
+                                                    </div>
 												</div>
-												<div class="row col-12" style="width: 100%;">	
+												<div class="row col-12" style="width: 100%;">
 													<p style="width: 100%; border-bottom: 1px solid; border-color: rgba(0,0,0,.1);">{{$oAdvert->title}}</p>
 												</div>
 											</div>
 										</div>
-									@endforeach
+                                    @empty
+                                        <h4 class="w-100 text-center">Записи отсутствуют</h4>
+									@endforelse
 								</div>
 								<div class="row col-12 justify-content-center">
 									{{ $cAvderts->links() }}

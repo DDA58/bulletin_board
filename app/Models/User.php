@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return string
      */
-    public function getShortname() : string
+    public function getShortnameAttribute()
     {
         return $this->lastname. ' ' .mb_substr($this->firstname, 0, 1). '.' .($this->middlename ? mb_substr($this->middlename, 0, 1).'.' : '');
     }

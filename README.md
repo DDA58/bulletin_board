@@ -4,3 +4,4 @@
 4) Do command docker-compose up -d
 5) Do command docker-compose exec app php artisan key:generate
 6) Set MAIL_USERNAME and MAIL_PASSWORD from service mailtrap.io at your .env
+7) Do command docker-compose exec app php artisan search:reindex

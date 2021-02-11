@@ -61,6 +61,37 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
       "mask": "+7(999)999-9999"
     }).mask(node);
   });
+})();
+
+(function () {
+  var pricesFilterForm = document.forms.prices_filter_form;
+  if (!pricesFilterForm) return;
+  pricesFilterForm.querySelectorAll('input').forEach(function (input) {
+    var inputValue = new URL(location.href).searchParams.get(input.name);
+    input.value = inputValue ? inputValue : '';
+  });
+  pricesFilterForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var url = new URL(location.href);
+    pricesFilterForm.querySelectorAll('input').forEach(function (input) {
+      if (input.value != '') url.searchParams.set(input.name, input.value);else url.searchParams["delete"](input.name);
+    });
+    location.href = url.href;
+  });
+})();
+
+(function () {
+  var fulltextFilterForm = document.forms.fulltext_form;
+  if (!fulltextFilterForm) return;
+  var input = fulltextFilterForm.querySelector('input[name="fts"]');
+  var inputValue = new URL(location.href).searchParams.get(input.name);
+  input.value = inputValue ? inputValue : '';
+  fulltextFilterForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var url = new URL(location.href);
+    if (input.value != '') url.searchParams.set(input.name, input.value);else url.searchParams["delete"](input.name);
+    location.href = url.href;
+  });
 })(); // window.Vue = require('vue').default;
 
 /**

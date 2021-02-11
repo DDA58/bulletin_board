@@ -97,6 +97,18 @@ services:
       - bulletin_board
     depends_on:
       - app
+  elasticsearch:
+    image: elasticsearch:6.8.1
+    container_name: ${APP_NAME}_elasticsearch
+    #volumes:
+      #- ./storage/elasticsearch/data/:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+    ports:
+      - 9200:9200
+    networks:
+      - bulletin_board
 networks:
   bulletin_board:
     driver: bridge

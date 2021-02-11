@@ -45,6 +45,47 @@ import Inputmask from "inputmask";
 
 })();
 
+(() => {
+	const pricesFilterForm = document.forms.prices_filter_form;
+	if(!pricesFilterForm)
+		return;
+	pricesFilterForm.querySelectorAll('input').forEach(input => {
+		const inputValue = (new URL(location.href)).searchParams.get(input.name);
+		input.value = inputValue ? inputValue : '';
+	});
+
+	pricesFilterForm.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const url = new URL(location.href);
+		pricesFilterForm.querySelectorAll('input').forEach(input => {
+			if(input.value != '')
+				url.searchParams.set(input.name, input.value);
+			else
+				url.searchParams.delete(input.name);
+		});
+		location.href = url.href;
+	});
+})();
+
+(() => {
+    const fulltextFilterForm = document.forms.fulltext_form;
+    if(!fulltextFilterForm)
+        return;
+    const input = fulltextFilterForm.querySelector('input[name="fts"]');
+    const inputValue = (new URL(location.href)).searchParams.get(input.name);
+    input.value = inputValue ? inputValue : '';
+
+    fulltextFilterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const url = new URL(location.href);
+        if(input.value != '')
+            url.searchParams.set(input.name, input.value);
+        else
+            url.searchParams.delete(input.name);
+        location.href = url.href;
+    });
+})();
+
 // window.Vue = require('vue').default;
 
 /**
