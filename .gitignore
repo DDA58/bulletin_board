@@ -21,3 +21,4 @@ storage/pg-data/
 storage/rabbitmq/
 
 storage/categor.sql
+.idea
